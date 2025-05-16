@@ -10,6 +10,12 @@
     let artCaption = $state(['', '', '', '']);
 
 
+    async function handleLogin() {
+        const authUrl = 'http://localhost:8000/login';
+        window.location.href = authUrl;
+    }
+
+
     onMount(() => {
         const utcTime = new Date();
         const settings = {
@@ -93,7 +99,7 @@
                       class = title>
               </div>
               <div class = "spacer">
-                <button class = "login"> Log In </button>
+                <button class = "login" onclick={handleLogin}> Log In </button>
             </div>
               
           </div>
