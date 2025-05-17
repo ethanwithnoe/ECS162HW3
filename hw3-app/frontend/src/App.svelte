@@ -4,17 +4,61 @@
     let currentDate = $state('');
     let apiKey = $state('');
     let dataObj: any;
+    
     let artTitle = $state(['', '', '', '']);
     let artAbstract =  $state(['', '', '', '']);
     let artImage =  $state(['', '', '', '']);
     let artCaption = $state(['', '', '', '']);
-
+    
+    let loginpopup = $state(false);
+    let loggedIn = $state(false);
+    let commenting = $state(false);
+    let account = $state("Log In");
 
     async function handleLogin() {
+        // if(loggedIn){
+        //     openUserInfo();
+        // }
         const authUrl = 'http://localhost:8000/login';
         window.location.href = authUrl;
+
     }
 
+    function openUserInfo() {
+        let userinfoElement = document.getElementById("userinfo");
+        if (userinfoElement) {
+            userinfoElement.style.display = "block";
+        }
+    }
+
+    function closeUserInfo() {
+        let userinfoElement = document.getElementById("userinfo");
+        if (userinfoElement) {
+            userinfoElement.style.display = "none";
+        }
+    }
+
+    function openComment() {
+        let commentsElement = document.getElementById("comments");
+        if (commentsElement) {
+            commentsElement.style.display = "block";
+        }
+    }
+
+    function closeComment() {
+        let commentsElement = document.getElementById("comments");
+        if (commentsElement) {
+            commentsElement.style.display = "none";
+        }
+        
+    }
+    // onMount(() => {
+    //     const currurl = window.location.href;
+    //     if (currurl.includes("user")) {
+    //         loggedIn = true;
+    //         account = "Account";
+    //     }
+    // });
 
     onMount(() => {
         const utcTime = new Date();
@@ -71,17 +115,24 @@
         }
     }
 
-    let loginpopup = $state(false);
-    let loggedIn = $state(false);
-    let commenting = $state(false);
-
-    function openForm() {
-        document.getElementById("myForm").style.display = "block";
+    function checkLogIn() {
+        const currurl = window.location.href;
+        if (currurl.includes("user")) {
+            loggedIn = true;
+            account = "Account";
+        } else {
+            loggedIn = false;
+            account = "Log In";
+        }
     }
 
-    function closeForm() {
-        document.getElementById("myForm").style.display = "none";
-    }
+    onMount(() => {
+        checkLogIn();
+        window.addEventListener("popstate", checkLogIn);
+        return () => {
+            window.removeEventListener("popstate", checkLogIn);
+        };
+    });
 
   </script>
   
@@ -99,15 +150,30 @@
                       class = title>
               </div>
               <div class = "spacer">
-                <button class = "login" onclick={handleLogin}> Log In </button>
+                <button class = "login" onclick={handleLogin}> {account} </button>
             </div>
               
           </div>
+    {#if loggedIn}
+        <div class="userinfodarkener" id = "userinfo">
+            <div class="userspacer"> </div>
+                <div class="userinfobar">
+                    <h1>
+                        <span class="username">USER INFO</span>
+                    </h1>
+                    <button class="exituserinfo" onclick={closeUserInfo} aria-label="closeUserInfo"> CLOSE USERINFO</button>
+                </div>
+                
+        </div>              
+    {/if}
+
+
+
 
           <!-- A button to open the popup form -->
-          <button class="open-button" onclick={openForm}>Open Form</button>
+          <button class="open-button" onclick={openComment}>Open Form</button>
           <!-- The form -->
-           <div class="form-popup" id="myForm">
+           <div class="form-popup" id="comments">
             <form action="/action_page.php" class="form-container">
                 <h1>Login</h1>
 
@@ -118,7 +184,7 @@
                 <input type="password" placeholder="Enter Password" name="psw" required>
 
                 <button type="submit" class="btn">Login</button>
-                <button type="button" class="btn cancel" onclick={closeForm}>Close</button>
+                <button type="button" class="btn cancel" onclick={closeComment}>Close</button>
             </form>
             </div>
 
@@ -137,8 +203,17 @@
                       width="800"
                       class="image img1">
                   </figure>
-                  <p>{artAbstract[0]}</p>
-      
+                  <p>{artAbstract[3]}</p>
+                    <div class = "buttondiv">  
+                        <button class="commentbutton" onclick={openComment} id="{artTitle[3]}">
+                            <div class="css-1mlnk6q">
+                            <svg width="21" height="18" viewBox="0 0 21 18" class="css-2urdiw">
+                                <path d="m14.52 17.831-5.715-4.545H2.4a1.468 1.468 0 0 1-1.468-1.469V1.894A1.471 1.471 0 0 1 2.4.405h16.583a1.469 1.469 0 0 1 1.469 1.469v9.923a1.469 1.469 0 0 1-1.47 1.47H14.58l-.06 4.564ZM2.4 1.645a.228.228 0 0 0-.228.229v9.923a.228.228 0 0 0 .228.229h6.811l4.06 3.235v-3.235h5.652a.228.228 0 0 0 .229-.229V1.874a.228.228 0 0 0-.229-.229H2.4Z" fill="#121212" fill-rule="nonzero"></path>
+                            </svg>
+                            <span class="commentCount">TEST</span>
+                            </div>
+                        </button>
+                    </div>
               </article>
               <article class="article art2">
                   <header>
@@ -170,5 +245,4 @@
           </div>
   
   </main>
-  
-  
+
