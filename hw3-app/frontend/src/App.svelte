@@ -150,25 +150,23 @@
                       class = title>
               </div>
               <div class = "spacer">
-                <button class = "login" onclick={handleLogin}> {account} </button>
+                 {#if loggedIn}
+                  <button class = "account" onclick={openUserInfo}> {account} </button>
+                 {:else}
+                  <button class = "login" onclick={handleLogin}> {account} </button>
+                 {/if}
             </div>
-              
           </div>
-    {#if loggedIn}
+
         <div class="userinfodarkener" id = "userinfo">
             <div class="userspacer"> </div>
                 <div class="userinfobar">
                     <h1>
                         <span class="username">USER INFO</span>
                     </h1>
-                    <button class="exituserinfo" onclick={closeUserInfo} aria-label="closeUserInfo"> CLOSE USERINFO</button>
+                    <button class="exituserinfo" onclick={closeUserInfo} aria-label="closeUserInfo"> CLOSE USERINFO </button>
                 </div>
-                
         </div>              
-    {/if}
-
-
-
 
           <!-- A button to open the popup form -->
           <button class="open-button" onclick={openComment}>Open Form</button>
