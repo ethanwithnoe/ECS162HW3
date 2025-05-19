@@ -126,16 +126,30 @@
     z-index: 1000000121;
     display: none; /* Initially hidden */
 }
+.userinfocontainer{
+    display: flex;
+    flex-direction: row; /* Initially hidden */
+    height: 100%;
+}
 
 .userspacer{
-    flex: 5;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+    /* flex: 5; */
 }
 
 .userinfobar{
+    top: 0;
+    left: 0;
+    width: 30%;
+    height: 100%;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    /* flex: 1 */
 }
 
 @media only screen and (max-width: 768px) {

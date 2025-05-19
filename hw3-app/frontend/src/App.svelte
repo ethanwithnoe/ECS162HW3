@@ -157,17 +157,19 @@
                  {/if}
             </div>
           </div>
-
+{#if loggedIn}
         <div class="userinfodarkener" id = "userinfo">
-            <div class="userspacer"> </div>
-                <div class="userinfobar">
+            <div class = "userinfocontainer">
+                <div class="userspacer"> </div>
+                    <div class="userinfobar">
                     <h1>
                         <span class="username">USER INFO</span>
                     </h1>
                     <button class="exituserinfo" onclick={closeUserInfo} aria-label="closeUserInfo"> CLOSE USERINFO </button>
+                    </div>
                 </div>
         </div>              
-
+ {/if}
           <!-- A button to open the popup form -->
           <button class="open-button" onclick={openComment}>Open Form</button>
           <!-- The form -->
