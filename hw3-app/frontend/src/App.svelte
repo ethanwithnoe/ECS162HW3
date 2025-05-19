@@ -53,10 +53,10 @@
         
     }
 
-    function createComment() {
-        let title = "Test Article Name";
-        let comment = "This is a comment";
-        let email = "username";
+    function createComment(title: string, comment: string, email: string) {
+        title = "Test Article Name";
+        comment = "This is a comment";
+        email = "username";
         // "Test Article Name", "This is a comment", "username"
         let commentsElement = document.getElementById("commentbox");
         if (commentsElement) {
