@@ -14,7 +14,6 @@
     let loggedIn = $state(false);
     let commenting = $state(false);
     let account = $state("Log In");
-
     async function handleLogin() {
         // if(loggedIn){
         //     openUserInfo();
@@ -52,6 +51,14 @@
         }
         
     }
+    function handleSubmit(event: Event) {
+        event.preventDefault();
+        createComment(commentTitle, commentText, userEmail);
+    }
+
+    let commentTitle = $state("");
+    let commentText = $state("");
+    let userEmail = $state("");
 
     function createComment(title: string, comment: string, email: string) {
         title = "Test Article Name";
@@ -69,7 +76,11 @@
                 },
             })
         }
+        commentTitle = "";
+        commentText = "";
+        userEmail = "";
     }
+     
     // onMount(() => {
     //     const currurl = window.location.href;
     //     if (currurl.includes("user")) {
@@ -188,8 +199,8 @@
                     <h1>
                         <span class="username">USER INFO</span>
                     </h1>
-                    <button class="exituserinfo" onclick={closeUserInfo} aria-label="closeUserInfo"> CLOSE USERINFO </button>
-                    <button class="logout" onclick={logout} aria-label="logout"> Logout </button>
+                    <button class="account" onclick={closeUserInfo} aria-label="closeUserInfo"> CLOSE USERINFO </button>
+                    <button class="account" onclick={logout} aria-label="logout"> Logout </button>
                     </div>
                 </div>
         </div>              
@@ -200,32 +211,24 @@
                 <div class="commentspacer"> </div>
                     <div class="commentinfobar">
                     <h1>
-                        <span class="commentinfo">COMMENT INFO</span>
+                        <span class="commentinfo">Comment Section</span>
                     </h1>
-                    <button class="exitcommentinfo" onclick={closeComment} aria-label="closeUserInfo"> CLOSE COMMENT </button>
+                    <form onsubmit={handleSubmit}>
+                        <label for="commenttitle">Title</label>
+                        <input id="commenttitle" name="commenttitle" type="text" bind:value={commentTitle} required />
+
+                        <label for="commenttext">Comment</label>
+                        <input id="commenttext" name="commenttext" bind:value={commentText} required>
+                        
+                        <button type="submit" class="btn">Submit</button>
+
+                    </form>
+                    <button class="account" onclick={closeComment} aria-label="closeUserInfo"> CLOSE COMMENTS </button>
                     </div>
                 </div>
         </div> 
                  
-          <!-- A button to open the popup form -->
-          <button class="open-button" onclick={openComment}>Open Form</button>
-          <!-- The form -->
-           <!-- <div class="form-popup" id="comments">
-            <form action="/action_page.php" class="form-container">
-                <h1>Login</h1>
-
-                <label for="email"><b>Email</b></label>
-                <input type="text" placeholder="Enter Email" name="email" required>
-
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
-
-                <button type="submit" class="btn">Login</button>
-                <button type="button" class="btn cancel" onclick={closeComment}>Close</button>
-            </form>
-            </div> -->
-
-          
+         
           <div class="secondline">
           </div>
           <div class="container" id="container-1">
@@ -242,12 +245,11 @@
                   </figure>
                   <p>{artAbstract[3]}</p>
                     <div class = "buttondiv">  
-                        <button class="commentbutton" onclick={openComment} id="{artTitle[3]}">
+                        <button class="commentbutton" onclick={openComment} id="{artTitle[3]}" aria-label="Comment for {artTitle[3]}">
                             <div class="css-1mlnk6q">
                             <svg width="21" height="18" viewBox="0 0 21 18" class="css-2urdiw">
                                 <path d="m14.52 17.831-5.715-4.545H2.4a1.468 1.468 0 0 1-1.468-1.469V1.894A1.471 1.471 0 0 1 2.4.405h16.583a1.469 1.469 0 0 1 1.469 1.469v9.923a1.469 1.469 0 0 1-1.47 1.47H14.58l-.06 4.564ZM2.4 1.645a.228.228 0 0 0-.228.229v9.923a.228.228 0 0 0 .228.229h6.811l4.06 3.235v-3.235h5.652a.228.228 0 0 0 .229-.229V1.874a.228.228 0 0 0-.229-.229H2.4Z" fill="#121212" fill-rule="nonzero"></path>
                             </svg>
-                            <span class="commentCount">TEST</span>
                             </div>
                         </button>
                     </div>
@@ -264,6 +266,15 @@
                       class="image img2">
                   </figure>
                   <p>{artAbstract[1]}</p>
+                  <div class = "buttondiv">  
+                        <button class="commentbutton" onclick={openComment} id="{artTitle[1]}" aria-label="Comment for {artTitle[1]}">
+                            <div class="css-1mlnk6q">
+                            <svg width="21" height="18" viewBox="0 0 21 18" class="css-2urdiw">
+                                <path d="m14.52 17.831-5.715-4.545H2.4a1.468 1.468 0 0 1-1.468-1.469V1.894A1.471 1.471 0 0 1 2.4.405h16.583a1.469 1.469 0 0 1 1.469 1.469v9.923a1.469 1.469 0 0 1-1.47 1.47H14.58l-.06 4.564ZM2.4 1.645a.228.228 0 0 0-.228.229v9.923a.228.228 0 0 0 .228.229h6.811l4.06 3.235v-3.235h5.652a.228.228 0 0 0 .229-.229V1.874a.228.228 0 0 0-.229-.229H2.4Z" fill="#121212" fill-rule="nonzero"></path>
+                            </svg>
+                            </div>
+                        </button>
+                    </div>
               </article>
               <article class="article art3">
                   <header>
@@ -277,6 +288,15 @@
                       class="image img3">
                   </figure>
                   <p>{artAbstract[2]}</p>
+                  <div class = "buttondiv">  
+                        <button class="commentbutton" onclick={openComment} id="{artTitle[2]}" aria-label="Comment for {artTitle[2]}">
+                            <div class="css-1mlnk6q">
+                            <svg width="21" height="18" viewBox="0 0 21 18" class="css-2urdiw">
+                                <path d="m14.52 17.831-5.715-4.545H2.4a1.468 1.468 0 0 1-1.468-1.469V1.894A1.471 1.471 0 0 1 2.4.405h16.583a1.469 1.469 0 0 1 1.469 1.469v9.923a1.469 1.469 0 0 1-1.47 1.47H14.58l-.06 4.564ZM2.4 1.645a.228.228 0 0 0-.228.229v9.923a.228.228 0 0 0 .228.229h6.811l4.06 3.235v-3.235h5.652a.228.228 0 0 0 .229-.229V1.874a.228.228 0 0 0-.229-.229H2.4Z" fill="#121212" fill-rule="nonzero"></path>
+                            </svg>
+                            </div>
+                        </button>
+                    </div>
                   
               </article>
           </div>
