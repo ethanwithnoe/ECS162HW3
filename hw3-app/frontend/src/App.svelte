@@ -14,10 +14,8 @@
     let loggedIn = $state(false);
     let commenting = $state(false);
     let account = $state("Log In");
+    let user = $state("");
     async function handleLogin() {
-        // if(loggedIn){
-        //     openUserInfo();
-        // }
         const authUrl = 'http://localhost:8000/login';
         window.location.href = authUrl;
 
@@ -148,6 +146,7 @@
         if (currurl.includes("user")) {
             loggedIn = true;
             account = "Account";
+            user = currurl.slice(currurl.indexOf('user=') + 5);
         } else {
             loggedIn = false;
             account = "Log In";
@@ -197,9 +196,9 @@
                 <div class="userspacer"> </div>
                     <div class="userinfobar">
                     <h1>
-                        <span class="username">USER INFO</span>
+                        <span class="username">{user}</span>
                     </h1>
-                    <button class="account" onclick={closeUserInfo} aria-label="closeUserInfo"> CLOSE USERINFO </button>
+                    <button class="account" onclick={closeUserInfo} aria-label="closeUserInfo"> Close User Info </button>
                     <button class="account" onclick={logout} aria-label="logout"> Logout </button>
                     </div>
                 </div>
@@ -214,13 +213,10 @@
                         <span class="commentinfo">Comment Section</span>
                     </h1>
                     <form onsubmit={handleSubmit}>
-                        <label for="commenttitle">Title</label>
-                        <input id="commenttitle" name="commenttitle" type="text" bind:value={commentTitle} required />
-
                         <label for="commenttext">Comment</label>
                         <input id="commenttext" name="commenttext" bind:value={commentText} required>
                         
-                        <button type="submit" class="btn">Submit</button>
+                        <button type="submit" class="account">Submit</button>
 
                     </form>
                     <button class="account" onclick={closeComment} aria-label="closeUserInfo"> CLOSE COMMENTS </button>
