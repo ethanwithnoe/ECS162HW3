@@ -60,8 +60,8 @@
         // "Test Article Name", "This is a comment", "username"
         let commentsElement = document.getElementById("commentbox");
         if (commentsElement) {
-            fetch('/comments/create_comment', {
-                method: 'POST',
+            fetch(`/comments`, {
+                method: "POST",
                 headers: {
                     "article_title": title,
                     "comment_string": comment,
@@ -156,6 +156,7 @@
     });
 
     execute();
+
   </script>
   
   <main>
