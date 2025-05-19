@@ -125,6 +125,10 @@
         }
     }
 
+    function logout() {
+        window.location.href = "http://localhost:5173";
+    }
+
     onMount(() => {
         checkLogIn();
         window.addEventListener("popstate", checkLogIn);
@@ -166,6 +170,7 @@
                         <span class="username">USER INFO</span>
                     </h1>
                     <button class="exituserinfo" onclick={closeUserInfo} aria-label="closeUserInfo"> CLOSE USERINFO </button>
+                    <button class="logout" onclick={logout} aria-label="logout"> Logout </button>
                     </div>
                 </div>
         </div>              
