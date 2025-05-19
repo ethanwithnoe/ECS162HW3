@@ -20,7 +20,6 @@ db = client["mydatabase"]
 comments_collection = db["comments"]
 
 
-app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 
@@ -75,16 +74,32 @@ def logout():
 # def get_key():
 #     return jsonify({'apiKey': os.getenv('NYT_API_KEY')})
 
-@app.route('/comments', methods={'POST'})
+@app.route('/api/comments', methods=['POST'])
 def create_comment():
-    result = comments_collection.insert_one(request.json)
-    print("hello create_comment here")
-    return jsonify({"article_title": str(result.article_title), "comment_string": str(result.comment_string), "user_email": str(result.user_email)}), 201
+    data = request.json
+    result = comments_collection.insert_one(data)
+    return jsonify({"article_id": data.get("article_id"),
+                    "comment_text": data.get("comment_text"),
+                    "user": data.get("user"),
+                    "inserted_id": str(result.inserted_id)}), 201
+
+@app.route('/api/comments', methods=['GET'])
+def get_comments():
+    comments = list(comments_collection.find())
+    for com in comments:
+        com['_id'] = str(com['_id'])
+    return jsonify(comments)
+
+@app.route('/api/comments', methods=['DELETE'])
+def delete_comment(comment):
+    result = comments_collection.delete_one({"comment_text": comment})
+    return jsonify({"deleted_count": result.deleted_count})
 
 NYT_API_KEY = os.getenv('NYT_API_KEY')  
 
 @app.route('/api/articles', methods=['GET'])
 def getarticles():
+    print("hello getarticles here")
     query = '"Davis CA""U.C. Davis"'
     url = f"https://api.nytimes.com/svc/search/v2/articlesearch.json?q={query}&api-key={NYT_API_KEY}"
 

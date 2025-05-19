@@ -61,25 +61,21 @@
     let commentText = $state("");
     let userEmail = $state("");
 
-    function createComment(title: string, comment: string, email: string) {
-        title = "Test Article Name";
-        comment = "This is a comment";
-        email = "username";
-        // "Test Article Name", "This is a comment", "username"
+    async function createComment(article: string, comment: string, email: string) {
         let commentsElement = document.getElementById("commentbox");
         if (commentsElement) {
-            fetch(`/comments`, {
+            await fetch('/api/comments', {
                 method: "POST",
                 headers: {
-                    "article_title": title,
-                    "comment_string": comment,
-                    "user_email": email,
+                    "Content-Type": "application/json"
                 },
-            })
+                body: JSON.stringify({
+                    article_id: article,
+                    comment_text: comment,
+                    user: email,
+                })
+            });
         }
-        commentTitle = "";
-        commentText = "";
-        userEmail = "";
     }
      
     // onMount(() => {
