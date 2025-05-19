@@ -72,23 +72,22 @@
     });
 
     
-    onMount(async () => {
-    try {
-        const res = await fetch('/api/key');
-        const data = await res.json();
-        apiKey = data.apiKey;
+    // onMount(async () => {
+    // try {
+    //     const res = await fetch('/api/key');
+    //     const data = await res.json();
+    //     apiKey = data.apiKey;
 
-        if (apiKey) {
-                execute();
-        }
-    } catch (error) {
-        console.error('Failed to fetch API key:', error);
-    }
-    });
+    //     if (apiKey) {
+    //             execute();
+    //     }
+    // } catch (error) {
+    //     console.error('Failed to fetch API key:', error);
+    // }
+    // });
 
-    async function execute() { 
-        const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q="Davis CA""U.C. Davis"&api-key=${apiKey}`; 
-        //const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=%22Davis%20California%22%20%22Yolo%20County%22%20%22Sacramento%22&q=%22Davis%20California%22%20%22University%20of%20California%2C%20Davis%22%20&sort=relevance&api-key=${apiKey}`;
+    async function execute() {
+        const url = `/api/articles`; 
         const options = {
             method: "GET",
             headers: {
@@ -134,6 +133,7 @@
         };
     });
 
+    execute();
   </script>
   
   <main>

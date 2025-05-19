@@ -3,8 +3,8 @@ from authlib.integrations.flask_client import OAuth
 from authlib.common.security import generate_token
 import os
 
-from flask import Flask, jsonify, send_from_directory
-import os
+from flask import Flask, jsonify, send_from_directory, request
+import requests
 from flask_cors import CORS
 
 static_path = os.getenv('STATIC_PATH','static')
@@ -65,12 +65,23 @@ def logout():
     session.clear()
     return redirect('/')
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8000)
+# @app.route('/api/key')
+# def get_key():
+#     return jsonify({'apiKey': os.getenv('NYT_API_KEY')})
 
-@app.route('/api/key')
-def get_key():
-    return jsonify({'apiKey': os.getenv('NYT_API_KEY')})
+NYT_API_KEY = os.getenv('NYT_API_KEY')  
+
+@app.route('/api/articles', methods=['GET'])
+def getarticles():
+    query = '"Davis CA""U.C. Davis"'
+    url = f"https://api.nytimes.com/svc/search/v2/articlesearch.json?q={query}&api-key={NYT_API_KEY}"
+
+    response = requests.get(url)
+    if response.status_code != 200:
+        return jsonify({"error": "error"}), 500
+
+    data = response.json()
+    return jsonify(data), 200
 
 @app.route('/')
 @app.route('/<path:path>')
