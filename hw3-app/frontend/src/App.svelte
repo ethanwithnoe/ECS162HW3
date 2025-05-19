@@ -39,14 +39,14 @@
     }
 
     function openComment() {
-        let commentsElement = document.getElementById("comments");
+        let commentsElement = document.getElementById("commentbox");
         if (commentsElement) {
             commentsElement.style.display = "block";
         }
     }
 
     function closeComment() {
-        let commentsElement = document.getElementById("comments");
+        let commentsElement = document.getElementById("commentbox");
         if (commentsElement) {
             commentsElement.style.display = "none";
         }
@@ -108,7 +108,7 @@
                 artImage[i] = dataObj.response.docs[i].multimedia.default.url;
                 artCaption[i] = dataObj.response.docs[i].multimedia.caption;
             }
-            
+
         } catch (error) {
             console.error();
         }
@@ -170,10 +170,23 @@
                 </div>
         </div>              
  {/if}
+
+        <div class="commentinfodarkener" id = "commentbox">
+            <div class = "commentinfocontainer">
+                <div class="commentspacer"> </div>
+                    <div class="commentinfobar">
+                    <h1>
+                        <span class="commentinfo">COMMENT INFO</span>
+                    </h1>
+                    <button class="exitcommentinfo" onclick={closeComment} aria-label="closeUserInfo"> CLOSE COMMENT </button>
+                    </div>
+                </div>
+        </div> 
+                 
           <!-- A button to open the popup form -->
           <button class="open-button" onclick={openComment}>Open Form</button>
           <!-- The form -->
-           <div class="form-popup" id="comments">
+           <!-- <div class="form-popup" id="comments">
             <form action="/action_page.php" class="form-container">
                 <h1>Login</h1>
 
@@ -186,7 +199,7 @@
                 <button type="submit" class="btn">Login</button>
                 <button type="button" class="btn cancel" onclick={closeComment}>Close</button>
             </form>
-            </div>
+            </div> -->
 
           
           <div class="secondline">
