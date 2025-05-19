@@ -7,11 +7,17 @@ from flask import Flask, jsonify, send_from_directory, request
 import requests
 from flask_cors import CORS
 
+from pymongo import MongoClient
+
 static_path = os.getenv('STATIC_PATH','static')
 template_path = os.getenv('TEMPLATE_PATH','templates')
 
 app = Flask(__name__, static_folder=static_path, template_folder=template_path)
 CORS(app)
+
+client = MongoClient("mongodb://localhost:27017/")
+db = client["mydatabase"]
+comments_collection = db["comments"]
 
 
 app = Flask(__name__)
@@ -68,6 +74,12 @@ def logout():
 # @app.route('/api/key')
 # def get_key():
 #     return jsonify({'apiKey': os.getenv('NYT_API_KEY')})
+
+@app.route('/comments', methods={'POST'})
+def create_comment():
+    result = comments_collection.insert_one(request.json)
+    print("hello create_comment here")
+    return jsonify({"article_title": str(result.article_title), "comment_string": str(result.comment_string), "user_email": str(result.user_email)}), 201
 
 NYT_API_KEY = os.getenv('NYT_API_KEY')  
 

@@ -52,6 +52,24 @@
         }
         
     }
+
+    function createComment() {
+        let title = "Test Article Name";
+        let comment = "This is a comment";
+        let email = "username";
+        // "Test Article Name", "This is a comment", "username"
+        let commentsElement = document.getElementById("commentbox");
+        if (commentsElement) {
+            fetch('/comments/create_comment', {
+                method: 'POST',
+                headers: {
+                    "article_title": title,
+                    "comment_string": comment,
+                    "user_email": email,
+                },
+            })
+        }
+    }
     // onMount(() => {
     //     const currurl = window.location.href;
     //     if (currurl.includes("user")) {
